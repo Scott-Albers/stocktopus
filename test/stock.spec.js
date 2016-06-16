@@ -32,7 +32,22 @@ describe('Stock', () => {
           expect(totalReceived).to.above(0);
           expect(s1.shares).to.equal(25);
           expect(s1.sellPricePerShare).to.be.above(0);
-          done();
+  //        done();
+        });
+        done();
+      });
+    });
+    it('should sell stock, check for funds error', (done) => {
+      const s1 = new Stock('aapl');
+      s1.purchase(50, () => {
+        s1.sell(75, (err, totalReceived) => {
+//          console.log('Error: ', err);
+          expect(err).to.exist
+            .and.be.instanceof(Error)
+            .and.have.property('message', 'insufficient shares');
+          expect(totalReceived).to.equal(0);
+          expect(s1.shares).to.equal(50);
+//          done();
         });
         done();
       });
